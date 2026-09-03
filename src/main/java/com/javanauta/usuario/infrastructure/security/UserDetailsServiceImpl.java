@@ -12,9 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+
     // Repositório para acessar dados de usuário no banco de dados
     @Autowired
     private UsuarioRepository usuarioRepository;
+
 
     // Implementação do método para carregar detalhes do usuário pelo e-mail
     @Override
