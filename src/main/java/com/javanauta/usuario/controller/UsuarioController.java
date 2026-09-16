@@ -1,9 +1,11 @@
 package com.javanauta.usuario.controller;
 
 import com.javanauta.usuario.business.UsuarioService;
+import com.javanauta.usuario.business.ViaCepService;
 import com.javanauta.usuario.business.dto.EnderecoDTO;
 import com.javanauta.usuario.business.dto.TelefoneDTO;
 import com.javanauta.usuario.business.dto.UsuarioDTO;
+import com.javanauta.usuario.infrastructure.clients.ViaCepDTO;
 import com.javanauta.usuario.infrastructure.security.JwtUtil;
 import com.javanauta.usuario.infrastructure.security.SecurityConfig;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -25,6 +27,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+    private final ViaCepService viaCepService;
 
 
     @PostMapping
@@ -82,5 +85,10 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.cadastraTelefone(token, dto));
     }
 
+    //Consumindo a api viacep na controller para que o usuario consiga editar as info corretamnte
+    //pode-se receber como parametro ou path variable: depende do estilo que melhor organizar a api
+    @GetMapping("/endereco/{cep}")
+    public ResponseEntity<ViaCepDTO> buscarDadosCep(@PathVariable("cep") String cep){
+        return ResponseEntity.ok(viaCepService.buscarDadosEndereco(cep));}
 
 }
