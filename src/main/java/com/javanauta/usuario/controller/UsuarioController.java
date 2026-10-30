@@ -8,6 +8,7 @@ import com.javanauta.usuario.business.dto.UsuarioDTO;
 import com.javanauta.usuario.infrastructure.clients.ViaCepDTO;
 import com.javanauta.usuario.infrastructure.security.JwtUtil;
 import com.javanauta.usuario.infrastructure.security.SecurityConfig;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +32,14 @@ public class UsuarioController {
 
 
     @PostMapping
+    @Operation(security = {})
     public ResponseEntity<UsuarioDTO> salvaUsuario(@RequestBody UsuarioDTO usuarioDTO){
        return ResponseEntity.ok(usuarioService.salvaUsuario(usuarioDTO));
 
     }
 
     @PostMapping("/login")
+    @Operation(security = {})
     public String login(@RequestBody UsuarioDTO usuarioDTO){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(usuarioDTO.getEmail(), usuarioDTO.getSenha())
@@ -88,6 +91,7 @@ public class UsuarioController {
     //Consumindo a api viacep na controller para que o usuario consiga editar as info corretamnte
     //pode-se receber como parametro ou path variable: depende do estilo que melhor organizar a api
     @GetMapping("/endereco/{cep}")
+    @Operation(security = {})
     public ResponseEntity<ViaCepDTO> buscarDadosCep(@PathVariable("cep") String cep){
         return ResponseEntity.ok(viaCepService.buscarDadosEndereco(cep));}
 

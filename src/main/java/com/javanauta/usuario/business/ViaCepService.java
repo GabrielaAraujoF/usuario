@@ -5,8 +5,6 @@ import com.javanauta.usuario.infrastructure.clients.ViaCepDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-
 @Service
 @RequiredArgsConstructor
 public class ViaCepService {
@@ -22,8 +20,9 @@ public class ViaCepService {
         String cepFormatado = cep.replace(" ", "").
                 replace("-", "");
 
+        //matches do regex
         //se o length do cep for diferente de 8 (true) ele joga a exception.
-        if(!cepFormatado.matches("\\d+") || Objects.equals(cepFormatado.length(), 8)){
+        if(!cepFormatado.matches("\\d+") || cepFormatado.length() != 8){
             throw new IllegalArgumentException("O CEP contém caracteres inválidos, verifique!");
         }
 
